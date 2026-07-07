@@ -26,7 +26,7 @@ const getAll = catchAsync(async (req: Request, res: Response, next: NextFunction
 });
 
 const getById = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const result = await serviceService.getById(req.params.id);
+  const result = await serviceService.getById(String(req.params.id));
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -36,7 +36,7 @@ const getById = catchAsync(async (req: Request, res: Response, next: NextFunctio
 });
 
 const update = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const result = await serviceService.update(req.user!.id, req.user!.role, req.params.id, req.body);
+  const result = await serviceService.update(req.user!.id, req.user!.role, String(req.params.id), req.body);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -46,7 +46,7 @@ const update = catchAsync(async (req: Request, res: Response, next: NextFunction
 });
 
 const remove = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const result = await serviceService.remove(req.user!.id, req.user!.role, req.params.id);
+  const result = await serviceService.remove(req.user!.id, req.user!.role, String(req.params.id));
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,

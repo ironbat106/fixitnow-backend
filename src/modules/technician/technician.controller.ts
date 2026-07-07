@@ -17,7 +17,7 @@ const getAll = catchAsync(async (req: Request, res: Response, next: NextFunction
 });
 
 const getById = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const result = await technicianService.getById(req.params.id);
+  const result = await technicianService.getById(String(req.params.id));
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -57,7 +57,7 @@ const getMyBookings = catchAsync(async (req: Request, res: Response, next: NextF
 });
 
 const updateBookingStatus = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const result = await technicianService.updateBookingStatus(req.user!.id, req.params.bookingId, req.body.status as BookingStatus);
+  const result = await technicianService.updateBookingStatus(req.user!.id, String(req.params.bookingId), req.body.status as BookingStatus);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
