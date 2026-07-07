@@ -10,8 +10,15 @@ const bookingInclude = {
   review: true
 };
 
-const create = async (customerId: string, payload: { serviceId: string; scheduledAt: Date; address: string; note?: string }) => {
-  const service = await prisma.service.findUnique({ where: { id: payload.serviceId }, include: { technician: true } });
+const create = async (
+  customerId: string,
+  payload: { serviceId: string; scheduledAt: Date; address: string; note?: string }
+) => {
+  const service = await prisma.service.findUnique({
+    where: { id: payload.serviceId },
+    include: { technician: true }
+  });
+
   if (!service || !service.isActive) {
     throw new AppError(404, "Service not found");
   }
@@ -36,14 +43,25 @@ const create = async (customerId: string, payload: { serviceId: string; schedule
 
 const getMyBookings = async (userId: string, role: Role) => {
   if (role === Role.ADMIN) {
-    return prisma.booking.findMany({ include: bookingInclude, orderBy: { createdAt: "desc" } });
+    return prisma.booking.findMany({
+      include: bookingInclude,
+      orderBy: { createdAt: "desc" }
+    });
   }
 
-  return prisma.booking.findMany({ where: { customerId: userId }, include: bookingInclude, orderBy: { createdAt: "desc" } });
+  return prisma.booking.findMany({
+    where: { customerId: userId },
+    include: bookingInclude,
+    orderBy: { createdAt: "desc" }
+  });
 };
 
 const getById = async (userId: string, role: Role, bookingId: string) => {
-  const booking = await prisma.booking.findUnique({ where: { id: bookingId }, include: bookingInclude });
+  const booking = await prisma.booking.findUnique({
+    where: { id: bookingId },
+    include: bookingInclude
+  });
+
   if (!booking) {
     throw new AppError(404, "Booking not found");
   }
@@ -56,7 +74,10 @@ const getById = async (userId: string, role: Role, bookingId: string) => {
 };
 
 const cancel = async (userId: string, role: Role, bookingId: string) => {
-  const booking = await prisma.booking.findUnique({ where: { id: bookingId } });
+  const booking = await prisma.booking.findUnique({
+    where: { id: bookingId }
+  });
+
   if (!booking) {
     throw new AppError(404, "Booking not found");
   }
@@ -65,11 +86,21 @@ const cancel = async (userId: string, role: Role, bookingId: string) => {
     throw new AppError(403, "You can cancel only your own booking");
   }
 
-  if ([BookingStatus.IN_PROGRESS, BookingStatus.COMPLETED, BookingStatus.CANCELLED].includes(booking.status)) {
+  const nonCancellableStatuses: BookingStatus[] = [
+    BookingStatus.IN_PROGRESS,
+    BookingStatus.COMPLETED,
+    BookingStatus.CANCELLED
+  ];
+
+  if (nonCancellableStatuses.includes(booking.status)) {
     throw new AppError(400, "This booking cannot be cancelled now");
   }
 
-  return prisma.booking.update({ where: { id: bookingId }, data: { status: BookingStatus.CANCELLED }, include: bookingInclude });
+  return prisma.booking.update({
+    where: { id: bookingId },
+    data: { status: BookingStatus.CANCELLED },
+    include: bookingInclude
+  });
 };
 
 export const bookingService = {

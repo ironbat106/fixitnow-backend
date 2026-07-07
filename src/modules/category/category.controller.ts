@@ -25,7 +25,7 @@ const getAll = catchAsync(async (req: Request, res: Response, next: NextFunction
 });
 
 const update = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const result = await categoryService.update(req.params.id, req.body);
+  const result = await categoryService.update(String(req.params.id), req.body);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -35,7 +35,7 @@ const update = catchAsync(async (req: Request, res: Response, next: NextFunction
 });
 
 const remove = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const result = await categoryService.remove(req.params.id);
+  const result = await categoryService.remove(String(req.params.id));
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
