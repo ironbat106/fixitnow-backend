@@ -22,14 +22,22 @@ export const validateRequest = (schema: ZodTypeAny) => {
 
     const parsedData = result.data as {
       body?: unknown;
-      query?: unknown;
-      params?: unknown;
+      query?: Request["query"];
+      params?: Request["params"];
       cookies?: unknown;
     };
 
-    req.body = parsedData.body || req.body;
-    req.query = parsedData.query || req.query;
-    req.params = parsedData.params || req.params;
+    if (parsedData.body !== undefined) {
+      req.body = parsedData.body;
+    }
+
+    if (parsedData.query !== undefined) {
+      req.query = parsedData.query;
+    }
+
+    if (parsedData.params !== undefined) {
+      req.params = parsedData.params;
+    }
 
     next();
   };

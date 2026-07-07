@@ -6,6 +6,7 @@ import { bookingService } from "./booking.service";
 
 const create = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const result = await bookingService.create(req.user!.id, req.body);
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.CREATED,
@@ -16,6 +17,7 @@ const create = catchAsync(async (req: Request, res: Response, next: NextFunction
 
 const getMyBookings = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const result = await bookingService.getMyBookings(req.user!.id, req.user!.role);
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -25,7 +27,12 @@ const getMyBookings = catchAsync(async (req: Request, res: Response, next: NextF
 });
 
 const getById = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const result = await bookingService.getById(req.user!.id, req.user!.role, req.params.id);
+  const result = await bookingService.getById(
+    req.user!.id,
+    req.user!.role,
+    String(req.params.id)
+  );
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -35,7 +42,12 @@ const getById = catchAsync(async (req: Request, res: Response, next: NextFunctio
 });
 
 const cancel = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const result = await bookingService.cancel(req.user!.id, req.user!.role, req.params.id);
+  const result = await bookingService.cancel(
+    req.user!.id,
+    req.user!.role,
+    String(req.params.id)
+  );
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
