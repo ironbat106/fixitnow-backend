@@ -16,12 +16,21 @@ export const validateRequest = (schema: ZodTypeAny) => {
         path: issue.path.join("."),
         message: issue.message
       }));
+
       throw new AppError(400, "Validation Error", errorDetails);
     }
 
-    req.body = result.data.body || req.body;
-    req.query = result.data.query || req.query;
-    req.params = result.data.params || req.params;
+    const parsedData = result.data as {
+      body?: unknown;
+      query?: unknown;
+      params?: unknown;
+      cookies?: unknown;
+    };
+
+    req.body = parsedData.body || req.body;
+    req.query = parsedData.query || req.query;
+    req.params = parsedData.params || req.params;
+
     next();
   };
 };

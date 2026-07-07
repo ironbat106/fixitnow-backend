@@ -6,7 +6,7 @@ import config from "../config";
 import { AppError } from "../errors/AppError";
 
 export const globalErrorHandler = (err: unknown, req: Request, res: Response, next: NextFunction) => {
-  let statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+  let statusCode: number = httpStatus.INTERNAL_SERVER_ERROR;
   let message = "Internal Server Error";
   let errorDetails: unknown = null;
 
