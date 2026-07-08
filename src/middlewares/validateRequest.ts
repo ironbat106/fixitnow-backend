@@ -32,7 +32,11 @@ export const validateRequest = (schema: ZodTypeAny) => {
     }
 
     if (parsedData.query !== undefined) {
-      req.query = parsedData.query;
+      Object.defineProperty(req, "query", {
+        value: parsedData.query,
+        writable: true,
+        configurable: true
+      });
     }
 
     if (parsedData.params !== undefined) {
