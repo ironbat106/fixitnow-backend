@@ -141,14 +141,13 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/api/auth/login",
+              "raw": "{{base_url}}/api/wrong-route",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
-                "auth",
-                "login"
+                "wrong-route"
               ]
             }
           },
@@ -1204,9 +1203,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/admin/users",
+              "raw": "https://fixitnow-backend-rust.vercel.app/api/admin/users",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "fixitnow-backend-rust",
+                "vercel",
+                "app"
               ],
               "path": [
                 "api",
