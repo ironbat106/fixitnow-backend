@@ -4,10 +4,10 @@ FixItNow is a backend REST API for a home service marketplace. Customers can bro
  
 ## Live Submission Links
  
-Backend Repo     : 
-Live API         : 
-API Docs         : 
-Demo Video       : 
+Backend Repo     : https://github.com/ironbat106/fixitnow-backend
+Live API         : https://fixitnow-backend-rust.vercel.app
+API Docs         : https://github.com/ironbat106/fixitnow-backend/tree/main/postman
+Demo Video       : https://drive.google.com/file/d/1Yy99WfNza-BYuDeRdvOdQSM0c5r5oD11/view?usp=sharing
 Admin Email      : admin@fixitnow.com
 Admin Password   : admin123
  
